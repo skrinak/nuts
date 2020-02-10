@@ -1,0 +1,15 @@
+{
+    "resourceName": "inferModel4e3ab0b2",
+    "inferPolicyName": "inferPolicy4e3ab0b2",
+    "authRoleName": {
+        "Ref": "AuthRoleName"
+    },
+    "unauthRoleName": {
+        "Ref": "UnauthRoleName"
+    },
+    "inferType": "inferModel",
+    "endpointConfig": "import",
+    "endpointName": "deepar-electricity-demo-2019-12-17-15-12-51-953",
+    "endpointARN": "arn:aws:sagemaker:us-west-2:921212210452:endpoint/deepar-electricity-demo-2019-12-17-15-12-51-953",
+    "access": "authAndGuest"
+}

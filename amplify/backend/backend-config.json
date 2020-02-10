@@ -1,0 +1,50 @@
+{
+	"auth": {
+		"nuts6fd37e19": {
+			"service": "Cognito",
+			"providerPlugin": "awscloudformation",
+			"dependsOn": []
+		}
+	},
+	"predictions": {
+		"nutsp": {
+			"providerPlugin": "awscloudformation",
+			"service": "Rekognition",
+			"dependsOn": [],
+			"identifyType": "identifyEntities"
+		},
+		"interpretText95da6a27": {
+			"providerPlugin": "awscloudformation",
+			"service": "Comprehend",
+			"interpretType": "interpretText"
+		},
+		"inferModel4e3ab0b2": {
+			"providerPlugin": "awscloudformation",
+			"service": "SageMaker",
+			"inferType": "inferModel"
+		},
+		"identifyTextdbbdf8e5": {
+			"providerPlugin": "awscloudformation",
+			"service": "RekognitionAndTextract",
+			"dependsOn": [],
+			"identifyType": "identifyText"
+		},
+		"identifyLabelseb45ecbd": {
+			"providerPlugin": "awscloudformation",
+			"service": "Rekognition",
+			"dependsOn": [],
+			"identifyType": "identifyLabels"
+		},
+		"translateTextf4367351": {
+			"providerPlugin": "awscloudformation",
+			"service": "Translate",
+			"convertType": "translateText"
+		}
+	},
+	"storage": {
+		"nuts": {
+			"service": "S3",
+			"providerPlugin": "awscloudformation"
+		}
+	}
+}

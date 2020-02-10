@@ -1,0 +1,145 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Description": "Infer resource(s) stack creation using Amplify CLI",
+    "Parameters": {
+        "authRoleName": {
+            "Type": "String"
+        },
+        "unauthRoleName": {
+            "Type": "String"
+        },
+        "resourceName": {
+            "Type": "String"
+        },
+        "inferPolicyName": {
+            "Type": "String"
+        },
+        "access": {
+            "Type": "String"
+        },
+        "inferType": {
+            "Type": "String"
+        },
+        "endpointName": {
+            "Type": "String"
+        },
+        "endpointConfig": {
+            "Type": "String"
+        },
+        "endpointARN": {
+            "Type": "String"
+        },
+        "env": {
+            "Type": "String"
+        }
+    },
+    "Conditions": {
+        "AuthGuestRoleAccess": {
+            "Fn::Equals": [
+                {
+                    "Ref": "access"
+                },
+                "authAndGuest"
+            ]
+        }
+    },
+    "Outputs": {
+        "region": {
+            "Value": {
+                "Fn::FindInMap": [
+                    "RegionMapping",
+                    {
+                        "Ref": "AWS::Region"
+                    },
+                    {
+                        "Ref": "inferType"
+                    }
+                ]
+            }
+        },
+        "endpointName": {
+            "Value": {
+                "Ref": "endpointName"
+            }
+        }
+    },
+    "Resources": {
+        "InferModelPolicy": {
+            "Type": "AWS::IAM::Policy",
+            "Properties": {
+                "PolicyName": {
+                    "Ref": "inferPolicyName"
+                },
+                "Roles": {
+                    "Fn::If": [
+                        "AuthGuestRoleAccess",
+                        [
+                            {
+                                "Ref": "authRoleName"
+                            },
+                            {
+                                "Ref": "unauthRoleName"
+                            }
+                        ],
+                        [
+                            {
+                                "Ref": "authRoleName"
+                            }
+                        ]
+                    ]
+                },
+                "PolicyDocument": {
+                    "Version": "2012-10-17",
+                    "Statement": [
+                        {
+                            "Effect": "Allow",
+                            "Action": [
+                                "sagemaker:InvokeEndpoint"
+                            ],
+                            "Resource": {
+                                "Ref": "endpointARN"
+                            }
+                        }
+                    ]
+                }
+            }
+        }
+    },
+    "Mappings": {
+        "RegionMapping": {
+            "us-east-1": {
+                "inferModel": "us-east-1"
+            },
+            "us-east-2": {
+                "inferModel": "us-east-2"
+            },
+            "us-west-2": {
+                "inferModel": "us-west-2"
+            },
+            "eu-west-1": {
+                "inferModel": "eu-west-1"
+            },
+            "eu-west-2": {
+                "inferModel": "eu-west-2"
+            },
+            "eu-central-1": {
+                "inferModel": "eu-central-1"
+            },
+            "ap-northeast-1": {
+                "inferModel": "ap-northeast-1"
+            },
+            "ap-northeast-2": {
+                "inferModel": "ap-northeast-2"
+            },
+            "ap-southeast-1": {
+                "inferModel": "ap-southeast-1"
+            },
+            "ap-southeast-2": {
+                "inferModel": "ap-southeast-2"
+            },
+            "ap-south-1": {
+                "inferModel": "ap-south-1"
+            }
+        }
+    }
+}
